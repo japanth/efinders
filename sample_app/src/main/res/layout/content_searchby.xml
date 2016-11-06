@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_searchby"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="uk.co.alt236.btlescan.activities.SearchbyActivity"
+    tools:showIn="@layout/activity_searchby"
+    android:orientation="vertical"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/bgapp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search By"
+            android:textColor="#ffffff"
+            android:textSize="30dp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/searchby_obj"
+            android:src="@drawable/ic_objects"
+            />
+        <!--<ImageView
+            android:layout_marginLeft="50dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/searchby_room"
+            android:src="@drawable/ic_room"
+            android:layout_toRightOf="@id/searchby_obj"
+            />-->
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_searchby_obj"
+            android:text="Objects"
+            />
+
+
+<!--
+
+        <TextView
+            android:layout_marginLeft="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_searchby_room"
+            android:text="Rooms"
+            android:layout_toRightOf="@id/text_searchby_obj"
+            />
+-->
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

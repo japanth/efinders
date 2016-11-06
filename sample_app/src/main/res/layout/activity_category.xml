@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_category"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="uk.co.alt236.btlescan.activities.CategoryActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/bgapp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_welcom"
+            android:textColor="#ffffff"
+            android:textSize="30dp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+    android:layout_marginTop="50dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    >
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:id="@+id/categor_add"
+        android:src="@drawable/category_add"
+        />
+
+
+    <ImageView
+        android:layout_marginLeft="50dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:id="@+id/category_search"
+        android:src="@drawable/category_search"
+        android:layout_toRightOf="@id/categor_add"
+        />
+
+
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_addbeacon"
+            android:text="Add Beacon"
+            android:textSize="20sp"
+            />
+
+
+        <TextView
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_findob"
+            android:text="Find objects"
+            android:layout_toRightOf="@id/text_addbeacon"
+            android:textSize="20sp"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        >
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:id="@+id/categor_showinfo"
+        android:src="@drawable/category_showinfo"
+
+        />
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/category_setting"
+            android:id="@+id/category_setting"
+            android:layout_toRightOf="@id/categor_showinfo"
+            />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+
+
+        <TextView
+            android:layout_marginLeft="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_showinfo"
+            android:text="Information"
+            android:layout_marginRight="30dp"
+            android:textSize="20sp"
+            />
+
+
+        <TextView
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_setting"
+            android:text="Setting"
+            android:layout_toRightOf="@id/text_showinfo"
+            android:textSize="20sp"
+            />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+</LinearLayout>

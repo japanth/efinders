@@ -1,0 +1,10 @@
+<resources>
+    <color name="light_gray">#66e0e0e0</color>
+    <color name="deepPurple1">#03A9F4</color>
+    <color name="deepPurple2">#00BCD4</color>
+    <color name="deepPurple3">#2196F3</color>
+    <color name="deepPurple4">#2196F3</color>
+    <color name="deepPurple5">#03A9F4</color>
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+</resources>
