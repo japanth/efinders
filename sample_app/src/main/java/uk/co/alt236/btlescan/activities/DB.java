@@ -13,7 +13,19 @@ public class DB {
         DBHelper dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        String sql = "INSERT INTO " + DBHelper.TABLE_NAMEQ + "(" + DBHelper.COL_ITEM_NAMEQ + ", " + DBHelper.COL_ADDRESSQ + ", " + DBHelper.COL_DISTRANCEQ  +  ", " + DBHelper.COL_MAJORQ  + ") VALUES ('" + item_name + "', '" + address + "', '" + distracne + "', '" + major + "')";
+        String sql = "INSERT INTO " + DBHelper.TABLE_NAMEQ + "(" + DBHelper.COL_ITEM_NAMEQ + ", " + DBHelper.COL_ADDRESSQ + ", " + DBHelper.COL_DISTRANCEQ  +  ", " + DBHelper.COL_MAJORQ  + ") VALUES ('" + address + "', '" + item_name + "', '" + distracne + "', '" + major + "')";
+        db.execSQL(sql);
+
+        db.close();
+        dbHelper.close();
+
+    }
+
+    public static void insertime(Context context,String item_name,String time ){
+        DBHelper dbHelper = new DBHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String sql = "INSERT INTO " + DBHelper.TABLE_NAME_TIME + "(" + DBHelper.COL_ITEM_NAME_TIME + ", " + DBHelper.COL_TIME + ", " +  ") VALUES ('" + item_name + "', '" + time +"')";
         db.execSQL(sql);
 
         db.close();

@@ -1,6 +1,8 @@
 package uk.co.alt236.btlescan.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,16 +15,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import uk.co.alt236.btlescan.R;
 
 public class ShowallinfoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView namez,type,address;
-    ImageView img;
+    static SQLiteDatabase mDb;
+    static DBHelper mHelper;
+    static Cursor mCursor;
+
+    static final ArrayList<String> dirArray = new ArrayList<String>();
+    static final ArrayList<Integer> status = new ArrayList<Integer>();
+    static ShowbeaconAdapter adapterDir ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +44,32 @@ public class ShowallinfoActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        Bundle extras = getIntent().getExtras();
-        String name = extras.getString("name");
-
-        String[] resroom = DB.selectall(getApplicationContext(),name);
-        namez = (TextView) findViewById(R.id.text_nameinfoz);
-        type = (TextView) findViewById(R.id.text_typeinfoz);
-        address = (TextView) findViewById(R.id.text_addressinfoz);
-        img = (ImageView) findViewById(R.id.image_info);
-
-        if(resroom[1].equals("Room")){
-
-            img.setImageResource(R.drawable.image_room);
+        ListView listView = (ListView) findViewById(R.id.listView1);
+        mHelper = new DBHelper(this);
+        mDb = mHelper.getWritableDatabase();
+        mCursor = mDb.rawQuery("SELECT "+DBHelper.COL_ITEM_NAME +" FROM " + DBHelper.TABLE_NAME  ,null);
+        mCursor.moveToFirst();
+        dirArray.clear();
+        status.clear();
+        while ( !mCursor.isAfterLast() ){
+            dirArray.add( mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAME)));
+            status.add(View.GONE);
+            mCursor.moveToNext();
         }
 
-         namez.setText(resroom[0]);
-         type.setText(resroom[1]);
-         address.setText(resroom[2]);
+        adapterDir = new ShowbeaconAdapter (getApplicationContext(),dirArray,status);
+        listView.setAdapter(adapterDir);
+
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(ShowallinfoActivity.this, ScanBeaconActivity.class);
+                intent.putExtra("name", dirArray.get(position));
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -75,24 +96,50 @@ public class ShowallinfoActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.showallinfo, menu);
+        getMenuInflater().inflate(R.menu.showlistbeacon, menu);
         return true;
     }
 
+    Boolean currentstatus=false;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            for(int i=0;i<status.size();i++){
+                if(currentstatus==false){
+                    status.set(i,View.VISIBLE);
+                }
+                else {
+                    status.set(i,View.GONE);
+                }
+            }
+            // set if false then true
+            currentstatus = !currentstatus;
+            adapterDir.notifyDataSetChanged();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
+    public static void checkupdate (){
+        mCursor  = mDb.rawQuery("SELECT "+DBHelper.COL_ITEM_NAME +" FROM " + DBHelper.TABLE_NAME,null );
+        dirArray.clear();
+        status.clear();
+        mCursor.moveToFirst();
+        while ( !mCursor.isAfterLast() ){
+            dirArray.add( mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAME)));
+            status.add(View.VISIBLE);
+            mCursor.moveToNext();
+        }
+        adapterDir.notifyDataSetChanged();
+
+    }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -105,6 +152,7 @@ public class ShowallinfoActivity extends AppCompatActivity
             Intent home = new Intent(ShowallinfoActivity.this,CategoryActivity.class);
             startActivity(home);
         } else if (id == R.id.nav_about) {
+
             Intent info = new Intent(ShowallinfoActivity.this,ShowInfoActivity.class);
             startActivity(info);
 
@@ -113,5 +161,11 @@ public class ShowallinfoActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onPause() {
+        super.onPause();
+        mHelper.close();
+        mDb.close();
     }
 }

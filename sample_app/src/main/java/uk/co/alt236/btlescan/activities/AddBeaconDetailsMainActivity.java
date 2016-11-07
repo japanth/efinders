@@ -222,13 +222,11 @@ public class AddBeaconDetailsMainActivity extends AppCompatActivity
                     DB.insert(getApplicationContext(), address, "" + name.getText(), dis, status, major);
                     Intent intent = new Intent(AddBeaconDetailsMainActivity.this, TestImages.class);
                     intent.putExtra("name", ""+name.getText());
-                    Log.i("namexxxxxx: ", "" + name.getText());
                     startActivity(intent);
 
                 }else if (status.equals("Room")){
-                    DB.insertq(getApplicationContext(), address, "" + name.getText(), dis, major);
-                    Intent intent = new Intent(AddBeaconDetailsMainActivity.this, TestImages.class);
-                    intent.putExtra("name", ""+name.getText());
+                    DB.insertq(getApplicationContext(), "" + name.getText(), address, dis, major);
+                    Intent intent = new Intent(AddBeaconDetailsMainActivity.this, ShowlistbeaconActivity.class);
                     startActivity(intent);
 
                 }

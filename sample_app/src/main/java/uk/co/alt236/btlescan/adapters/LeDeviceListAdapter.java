@@ -130,12 +130,30 @@ public class LeDeviceListAdapter extends SimpleCursorAdapter {
             if(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ADDRESS)).equals(device.getAddress())) {
                 viewHolder.checkb.setText("Installed");
                 //viewHolder.checkn.setText(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAME)));
+            }
+            mCursor.moveToNext();
+            s++;
+
+        }
+        mHelper = new DBHelper(mActivity.getApplicationContext());
+        mDb = mHelper.getWritableDatabase();
+        mCursor = mDb.rawQuery("SELECT * FROM " + DBHelper.TABLE_NAMEQ  ,null);
+        mCursor.moveToFirst();
+
+        while ( !mCursor.isAfterLast() ){
+            if(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ADDRESSQ)).equals(device.getAddress())) {
+                viewHolder.checkb.setText("Installed");
+                //viewHolder.checkn.setText(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAME)));
 
             }
             mCursor.moveToNext();
             s++;
 
         }
+
+
+
+
         if (deviceName != null && deviceName.length() > 0) {
             viewHolder.deviceName.setText(deviceName);
         } else {

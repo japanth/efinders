@@ -64,7 +64,7 @@ public class ShowbeaconAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 DB.deletebeacon(mContext,name);
-                ShowlistbeaconActivity.checkupdate();
+                ShowallinfoActivity.checkupdate();
             }
         });
 

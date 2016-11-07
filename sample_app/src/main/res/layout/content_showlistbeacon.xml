@@ -16,11 +16,12 @@
 
 
     <ListView
-        android:id="@+id/listView1"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="20dp" />
+        android:layout_height="match_parent"
+        android:id="@+id/main_list_view"
+        android:cacheColorHint="@color/deepPurple1">
+    </ListView>
+
 
 </RelativeLayout>

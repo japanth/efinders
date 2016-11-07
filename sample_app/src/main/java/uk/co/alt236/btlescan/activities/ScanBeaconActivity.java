@@ -22,7 +22,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import uk.co.alt236.bluetoothlelib.device.BluetoothLeDevice;
 import uk.co.alt236.bluetoothlelib.device.beacon.ibeacon.IBeaconDevice;
@@ -87,11 +89,16 @@ public class ScanBeaconActivity extends AppCompatActivity
                         ArrayList adressroom = new ArrayList();
 
 
+                        Calendar c = Calendar.getInstance();
+                        System.out.println("Current time => "+c.getTime());
 
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String formattedDate = df.format(c.getTime());
 
                         while ( !mCursor.isAfterLast() ){
 
                             nameroom.add(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAMEQ)));
+                            Log.i("adressroomsss", "" + mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAMEQ)));
                             adressroom.add(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ADDRESSQ)));
                             mCursor.moveToNext();
                             count++;
@@ -100,16 +107,15 @@ public class ScanBeaconActivity extends AppCompatActivity
 
 
                         for (int i=0;i<=nameroom.size()-1;i++){
-                          if(adressroom.get(i).equals(iBeacon.getAddress())&&Double.parseDouble(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()))<=10){
+                          if(adressroom.get(i).equals(iBeacon.getAddress())&&Double.parseDouble(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()))<=15){
                                 showroom.setText(""+nameroom.get(i));
-                               show_room_address.setText(""+System.currentTimeMillis());
+                            /*   show_room_address.setText(""+System.currentTimeMillis());*/
                                 show_roomdis.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));
+                                DB.insertime(getApplicationContext(),""+nameroom.get(i),formattedDate);
+                            }
 
-                            }
-                            else {
-                                showroom.setText("   ");
-                            }
-                            Log.i("adressroomsss", "" + adressroom.get(i));
+
+                            Log.i("Rommms", "" + nameroom.get(i));
                    /*         showroom.setText(""+nameroom.get(i));
                             //show_room_address.setText(iBeacon.getAddress());
                             show_roomdis.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));*/
@@ -177,7 +183,7 @@ public class ScanBeaconActivity extends AppCompatActivity
         show_unit2 = (TextView) findViewById(R.id.show_unit2);
         showdistance = (TextView) findViewById(R.id.show_distance_beacon);
 //       show_room_dis = (TextView) findViewById(R.id.show_room_dis);
-       show_room_address = (TextView) findViewById(R.id.show_roomadd);
+     //  show_room_address = (TextView) findViewById(R.id.show_roomadd);
 
         scan.setOnClickListener(new View.OnClickListener() {
             @Override

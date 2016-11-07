@@ -25,6 +25,13 @@ public class DBHelper extends SQLiteOpenHelper{
     public static final String COL_ADDRESS = "address";
     public static final String COL_DISTRANCE = "distrance";
     public static final String COL_MAJOR = "major";
+
+
+    public static final String TABLE_NAME_TIME = "beacontime";
+    public static final String COL_ITEM_NAME_TIME = "item_name_time";
+    public static final String COL_TIME = "time";
+
+
     public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -33,6 +40,7 @@ public class DBHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_ITEM_NAME + " VARCHAR(255), " + COL_ADDRESS + " VARCHAR(255), " + COL_DISTRANCE + " VARCHAR(255), " + COL_TYPE + " VARCHAR(255), " + COL_MAJOR + " VARCHAR(255));");
         db.execSQL("CREATE TABLE " + TABLE_NAMEQ + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_ITEM_NAMEQ + " VARCHAR(255), " + COL_ADDRESSQ + " VARCHAR(255), " + COL_DISTRANCEQ + " VARCHAR(255), " + COL_TYPEQ + " VARCHAR(255), " + COL_MAJORQ + " VARCHAR(255));");
+        db.execSQL("CREATE TABLE " + TABLE_NAME_TIME + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_ITEM_NAME_TIME + " VARCHAR(255), " + COL_TIME + " VARCHAR(255));");
 
 
     }

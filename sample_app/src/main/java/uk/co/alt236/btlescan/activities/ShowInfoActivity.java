@@ -25,14 +25,13 @@ import uk.co.alt236.btlescan.R;
 public class ShowInfoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    static SQLiteDatabase mDb,mDb2;
-    static DBHelper mHelper,mHelper2;
-    static Cursor mCursor,mCursor2;
+    static SQLiteDatabase mDb;
+    static DBHelper mHelper;
+    static Cursor mCursor;
 
     static final ArrayList<String> dirArray = new ArrayList<String>();
-    static final ArrayList<String> dirArray2 = new ArrayList<String>();
     static final ArrayList<Integer> status = new ArrayList<Integer>();
-    static ShowbeaconAdapter adapterDir,adapterDir2 ;
+    static ShowbeaconAdapter adapterDir ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +41,11 @@ public class ShowInfoActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        ListView listView = (ListView) findViewById(R.id.listViewinfo);
+
+        ListView listView = (ListView) findViewById(R.id.listView1);
         mHelper = new DBHelper(this);
         mDb = mHelper.getWritableDatabase();
-        mCursor = mDb.rawQuery("SELECT "+DBHelper.COL_ITEM_NAME +" FROM " + DBHelper.TABLE_NAME , null);
-
+        mCursor = mDb.rawQuery("SELECT "+DBHelper.COL_ITEM_NAME +" FROM " + DBHelper.TABLE_NAME  ,null);
         mCursor.moveToFirst();
         dirArray.clear();
         status.clear();
@@ -59,15 +58,16 @@ public class ShowInfoActivity extends AppCompatActivity
         adapterDir = new ShowbeaconAdapter (getApplicationContext(),dirArray,status);
         listView.setAdapter(adapterDir);
 
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(ShowInfoActivity.this, ShowallinfoActivity.class);
+                Intent intent = new Intent(ShowInfoActivity.this, ScanBeaconActivity.class);
                 intent.putExtra("name", dirArray.get(position));
                 startActivity(intent);
             }
         });
-
 
 
 
@@ -94,10 +94,11 @@ public class ShowInfoActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.show_info, menu);
+        getMenuInflater().inflate(R.menu.showlistbeacon, menu);
         return true;
     }
 
+    Boolean currentstatus=false;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -107,11 +108,43 @@ public class ShowInfoActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            for(int i=0;i<status.size();i++){
+                if(currentstatus==false){
+                    status.set(i,View.VISIBLE);
+                }
+
+                else {
+                    status.set(i,View.GONE);
+                }
+            }
+
+            // set if false then true
+            currentstatus = !currentstatus;
+
+            adapterDir.notifyDataSetChanged();
+
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public static void checkupdate (){
+        mCursor  = mDb.rawQuery("SELECT "+DBHelper.COL_ITEM_NAME +" FROM " + DBHelper.TABLE_NAME,null );
+        dirArray.clear();
+        status.clear();
+        mCursor.moveToFirst();
+        while ( !mCursor.isAfterLast() ){
+            dirArray.add( mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAME)));
+            status.add(View.VISIBLE);
+            mCursor.moveToNext();
+        }
+        adapterDir.notifyDataSetChanged();
+
+    }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -127,10 +160,17 @@ public class ShowInfoActivity extends AppCompatActivity
 
             Intent info = new Intent(ShowInfoActivity.this,ShowInfoActivity.class);
             startActivity(info);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onPause() {
+        super.onPause();
+        mHelper.close();
+        mDb.close();
     }
 }

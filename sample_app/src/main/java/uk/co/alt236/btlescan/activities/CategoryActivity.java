@@ -45,7 +45,7 @@ ImageView addbeacon,addbeaconq,findobj,informa,setting;
         informa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CategoryActivity.this,ShowInfoActivity.class);
+                Intent intent = new Intent(CategoryActivity.this,ShowallinfoActivity.class);
                 startActivity(intent);
             }
         });

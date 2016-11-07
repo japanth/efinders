@@ -138,7 +138,7 @@ public class TestImages extends AppCompatActivity {
                     cursor.close();
                     MyImage image = new MyImage();
                     image.setTitle(name);
-                    image.setDescription("test choose a photo from gallery and add it to " + "list view");
+                    image.setDescription("  ");
                     image.setDatetime(System.currentTimeMillis());
                     image.setPath(picturePath);
                     //                    images.add(image);//notifyDataSetChanged does not work well sometimes
@@ -154,7 +154,7 @@ public class TestImages extends AppCompatActivity {
                     String picturePath = cursor.getString(column_index_data);
                     MyImage image = new MyImage();
                    image.setTitle(name);
-                   image.setDescription("test take a photo and add it to list view");
+                   image.setDescription(" ");
                    image.setDatetime(System.currentTimeMillis());
                     image.setPath(picturePath);
                     imageAdapter.add(image);

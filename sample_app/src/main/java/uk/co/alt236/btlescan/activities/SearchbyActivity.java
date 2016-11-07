@@ -24,6 +24,7 @@ public class SearchbyActivity extends AppCompatActivity {
 
         searchobj = (ImageView) findViewById(R.id.searchby_obj);
 
+        searchroom = (ImageView) findViewById(R.id.searchby_room);
         searchobj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,13 +33,13 @@ public class SearchbyActivity extends AppCompatActivity {
             }
         });
 
-      /*  searchroom.setOnClickListener(new View.OnClickListener() {
+        searchroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchbyActivity.this,ShowlistroomActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
     }
 
