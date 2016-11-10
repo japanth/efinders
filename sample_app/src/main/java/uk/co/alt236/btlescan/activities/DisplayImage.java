@@ -39,7 +39,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import uk.co.alt236.bluetoothlelib.device.BluetoothLeDevice;
 import uk.co.alt236.bluetoothlelib.device.beacon.ibeacon.IBeaconDevice;
@@ -76,6 +78,7 @@ public class DisplayImage extends Activity {
     IBeaconManufacturerData iBeaconData;
     IBeaconDevice iBeacon;
     String name;
+    int count =0;
 
 
     @Override
@@ -144,7 +147,8 @@ public class DisplayImage extends Activity {
                 @Override
                 public void run() {
                     if(iBeaconData != null) {
-
+                        Bundle extras = getIntent().getExtras();
+                        String name = extras.getString("name");
 
                         ImageView signal = (ImageView) findViewById(R.id.image_signal);
                         show_roomdis = (TextView) findViewById(R.id.show_roomdis);
@@ -155,70 +159,28 @@ public class DisplayImage extends Activity {
                         mDb = mHelper.getWritableDatabase();
                         mCursor = mDb.rawQuery("SELECT * FROM " + DBHelper.TABLE_NAMEQ  ,null);
                         mCursor.moveToFirst();
-                        int count =0;
+
 
                         ArrayList nameroom = new ArrayList();
                         ArrayList adressroom = new ArrayList();
 
 
+                        Calendar c = Calendar.getInstance();
+                        System.out.println("Current time => "+c.getTime());
+
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String formattedDate = df.format(c.getTime());
 
 
-                        while ( !mCursor.isAfterLast() ){
-
-                            nameroom.add(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAMEQ)));
-                            adressroom.add(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ADDRESSQ)));
-                            mCursor.moveToNext();
-                            count++;
-                        }
-
-
-
-                        for (int i=0;i<=nameroom.size()-1;i++){
-                            if(adressroom.get(i).equals(iBeacon.getAddress())&&Double.parseDouble(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()))<=10){
-                                showroom.setText(""+nameroom.get(i));
-                                show_room_address.setText(""+System.currentTimeMillis());
-                                show_roomdis.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));
-
-                            }
-                            else {
-                                showroom.setText("   ");
-                            }
-                            Log.i("adressroomsss", "" + adressroom.get(i));
-                   /*         showroom.setText(""+nameroom.get(i));
-                            //show_room_address.setText(iBeacon.getAddress());
-                            show_roomdis.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));*/
-
-                        }
-
-
-
-                        String[] res = DB.selectitem(getApplicationContext(), name);
-                        if(res[0]!=null) {
+                        String[] res = DB.selectitem(getApplicationContext(),name);
+                        if(res[2].equals(iBeacon.getAddress())) {
                             showname.setText(res[0]);
-                            showunit.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));
-                            show_unit2.setText(" Meter");
-                            if(iBeacon.getAccuracy()<2){
-                                showdistance.setText("Near");
-                                signal.setImageResource(R.drawable.ic_signal_4);
+                            showunit.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getRssi()));
 
-                            }else if (iBeacon.getAccuracy()>2&&iBeacon.getAccuracy()<8){
-                                signal.setImageResource(R.drawable.ic_signal_3);
-                                showdistance.setText("Medium");
-                            }
-                            else if (iBeacon.getAccuracy()>8&&iBeacon.getAccuracy()<15){
-                                signal.setImageResource(R.drawable.ic_signal_2);
-                                showdistance.setText("Far");
-                            }
-                            else if (iBeacon.getAccuracy()>15&&iBeacon.getAccuracy()<20){
-                                signal.setImageResource(R.drawable.ic_signal_1);
-                                showdistance.setText("Very Far");
-                            }
-                            else if (iBeacon.getAccuracy()>20){
-                                signal.setImageResource(R.drawable.ic_signal_0);
-                                showdistance.setText("Out Of Range");
-                            }
-                            Log.i("RES", "" + res[0]);
-                            Log.i("UUID", device.getAddress());
+                            count++;
+                            System.out.print("No: " + count + " Name: " + iBeacon.getName() + " Rssi= " + iBeacon.getRssi());
+
+
                         }
 
 
@@ -228,7 +190,6 @@ public class DisplayImage extends Activity {
             });
         }
     };
-
 
 
 

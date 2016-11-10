@@ -95,7 +95,8 @@ public class ScanBeaconActivity extends AppCompatActivity
                         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         String formattedDate = df.format(c.getTime());
 
-                        while ( !mCursor.isAfterLast() ){
+
+/*   while ( !mCursor.isAfterLast() ){
 
                             nameroom.add(mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAMEQ)));
                             Log.i("adressroomsss", "" + mCursor.getString(mCursor.getColumnIndex(DBHelper.COL_ITEM_NAMEQ)));
@@ -109,27 +110,26 @@ public class ScanBeaconActivity extends AppCompatActivity
                         for (int i=0;i<=nameroom.size()-1;i++){
                           if(adressroom.get(i).equals(iBeacon.getAddress())&&Double.parseDouble(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()))<=15){
                                 showroom.setText(""+nameroom.get(i));
-                            /*   show_room_address.setText(""+System.currentTimeMillis());*/
+                            *//*   show_room_address.setText(""+System.currentTimeMillis());*//*
                                 show_roomdis.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));
                                 DB.insertime(getApplicationContext(),""+nameroom.get(i),formattedDate);
                             }
 
 
                             Log.i("Rommms", "" + nameroom.get(i));
-                   /*         showroom.setText(""+nameroom.get(i));
+                   *//*         showroom.setText(""+nameroom.get(i));
                             //show_room_address.setText(iBeacon.getAddress());
-                            show_roomdis.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));*/
+                            show_roomdis.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));*//*
 
-                        }
-
+                        }*/
 
 
                         String[] res = DB.selectitem(getApplicationContext(),name);
                         if(res[0]!=null) {
                             showname.setText(res[0]);
-                            showunit.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getAccuracy()));
+                            showunit.setText(Constants.DOUBLE_TWO_DIGIT_ACCURACY.format(iBeacon.getRssi()));
                             show_unit2.setText(" Meter");
-                            if(iBeacon.getAccuracy()<2){
+                           /* if(iBeacon.getAccuracy()<2){
                                 showdistance.setText("Near");
                                 signal.setImageResource(R.drawable.ic_signal_4);
 
@@ -148,9 +148,12 @@ public class ScanBeaconActivity extends AppCompatActivity
                             else if (iBeacon.getAccuracy()>20){
                                 signal.setImageResource(R.drawable.ic_signal_0);
                                 showdistance.setText("Out Of Range");
-                            }
-                            Log.i("RES", "" + res[0]);
-                            Log.i("UUID", device.getAddress());
+                            }*/
+                            count++;
+                            Log.i("No:", ""+count);
+                            Log.i("Name", "" + iBeacon.getName());
+                            Log.i("Rssi", ""+iBeacon.getRssi());
+
                         }
 
 

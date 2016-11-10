@@ -256,10 +256,11 @@ public class DB {
         Cursor cursor =  db.rawQuery("SELECT * FROM " + DBHelper.TABLE_NAME + " WHERE "+ DBHelper.COL_ITEM_NAME + "= ? ", new String[]{name});
 
         cursor.moveToFirst();
-        String[] res = new String[2];
+        String[] res = new String[3];
         while (!cursor.isAfterLast()){
             res[0] = cursor.getString(cursor.getColumnIndex(DBHelper.COL_ITEM_NAME));
             res[1] = cursor.getString(cursor.getColumnIndex(DBHelper.COL_DISTRANCE));
+            res[2] = cursor.getString(cursor.getColumnIndex(DBHelper.COL_ADDRESS));
             cursor.moveToNext();
         }
         return res;
